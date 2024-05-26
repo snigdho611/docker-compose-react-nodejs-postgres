@@ -12,12 +12,42 @@ app.use(cors());
 router.get("/users/all", async (req, res) => {
     try {
         console.log(`${new Date().toISOString()} - All users request hit!`);
+        let { page, limit } = req.query;
 
-        const users = await prisma.user.findMany({});
+        if (!page && !limit) {
+            page = 1;
+            limit = 5;
+        }
+
+        if (page <= 0) {
+            return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send({
+                success: false,
+                message: "Page value must be 1 or more",
+                data: null,
+            });
+        }
+
+        if (limit <= 0) {
+            return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send({
+                success: false,
+                message: "Limit value must be 1 or more",
+                data: null,
+            });
+        }
+
+        const users = await prisma.user.findMany({
+            skip: Number(page - 1) * Number(limit),
+            take: Number(limit),
+        });
+
+        const total = await prisma.user.count();
         return res.status(HTTP_STATUS.OK).send({
             success: true,
             message: "Successfully received all users",
-            data: users,
+            data: {
+                users: users,
+                total: total,
+            },
         });
     } catch (error) {
         console.log(error);
