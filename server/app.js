@@ -2,52 +2,54 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const cors = require("cors");
-const users = require("./server/users.json");
+// const users = require("./server/users.json");
 const dotenv = require("dotenv");
+const HTTP_STATUS = require("./constants/httpStatus");
+const prisma = require("./config/database");
 dotenv.config();
 app.use(cors());
 
-router.get("/users/all", (req, res) => {
+router.get("/users/all", async (req, res) => {
     try {
         console.log(`${new Date().toISOString()} - All users request hit!`);
-        res.set("Cache-Control", "public, max-age=31557600");
-        return res.status(200).send({
+
+        const users = await prisma.user.findMany({});
+        return res.status(HTTP_STATUS.OK).send({
             success: true,
             message: "Successfully received all users",
             data: users,
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).send({
+        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({
             success: false,
             message: "Internal server error",
         });
     }
 });
 
-router.get(`/user/:id`, (req, res) => {
+router.get(`/user/:id`, async (req, res) => {
     try {
         console.log(`${new Date().toISOString()} - Single user request hit!`);
         const { id } = req.params;
 
-        res.set("Cache-Control", "public, max-age=31557600");
-        const result = users.filter((element) => element.id === Number(id));
+        const result = await prisma.user.findFirst({ where: { id: Number(id) } });
 
-        if (result.length === 1) {
-            return res.status(200).send({
+        if (result) {
+            return res.status(HTTP_STATUS.OK).send({
                 success: true,
                 message: `Successfully received user with id: ${id}`,
-                data: result[0],
+                data: result,
             });
         }
-        return res.status(404).send({
+        return res.status(HTTP_STATUS.NOT_FOUND).send({
             success: false,
             message: "Could not find user",
             data: null,
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).send({
+        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({
             success: false,
             message: "Internal server error",
         });
