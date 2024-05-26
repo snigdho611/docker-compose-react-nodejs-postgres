@@ -23,3 +23,15 @@ services:
             PORT: "${PORT}"
         depends_on:
             - postgres
+    client:
+        container_name: client
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        # command: npm start
+        ports:
+            - "4174:4173"
+        # environment:
+        #     VITE_SERVER_URL: "${VITE_SERVER_URL}"
+        depends_on:
+            - server
