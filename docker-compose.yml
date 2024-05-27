@@ -7,31 +7,35 @@ services:
         environment:
             POSTGRES_USER: "${POSTGRES_USER}"
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-            POSTGRES_DB: "${POSTGRES_DB}"
+            POSTGRES_DB: ${POSTGRES_DB}
         volumes:
             - ./docker_test_db:/var/lib/postgresql/data
+        healthcheck:
+          test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+          interval: 5s
+          timeout: 60s
+          retries: 5
+          start_period: 80s  
     server:
         container_name: server
         build:
             context: ./server
             dockerfile: Dockerfile
-        # command: npm start
         ports:
             - "7999:8000"
+        command: bash -c "npx prisma migrate dev && npx prisma db seed && npm start"
         environment:
             DATABASE_URL: "${DATABASE_URL}"
             PORT: "${PORT}"
         depends_on:
-            - postgres
+            postgres:
+              condition: service_healthy
     client:
         container_name: client
         build:
             context: ./client
             dockerfile: Dockerfile
-        # command: npm start
         ports:
             - "4174:4173"
-        # environment:
-        #     VITE_SERVER_URL: "${VITE_SERVER_URL}"
         depends_on:
             - server

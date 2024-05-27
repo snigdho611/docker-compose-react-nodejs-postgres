@@ -408,12 +408,24 @@ async function main() {
     });
 }
 
-main()
-    .then(async () => {
-        await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-        console.error(e);
-        await prisma.$disconnect();
-        process.exit(1);
-    });
+async function init() {
+    const users = await prisma.user.count();
+
+    console.log(users)
+    
+    if (users === 0) {
+        main()
+            .then(async () => {
+                await prisma.$disconnect();
+            })
+            .catch(async (e) => {
+                console.error(e);
+                await prisma.$disconnect();
+                process.exit(1);
+            });
+    } else {
+        console.log("Database seeding is not needed");
+    }
+}
+
+init()
