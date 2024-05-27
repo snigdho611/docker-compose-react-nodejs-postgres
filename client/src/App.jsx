@@ -1,15 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import UserDetail from "./pages/UserDetail";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/home" element={<Navigate to={"/"} />} />
         <Route path="/" element={<Home />} />
+        <Route path="/user/:id" element={<UserDetail />} />
       </Routes>
     </BrowserRouter>
   );

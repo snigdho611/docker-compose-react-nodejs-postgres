@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -48,8 +48,8 @@ const Home = () => {
         <tbody className="tbody">
           {users.map(({ id, first_name, last_name, email, gender, phone }) => {
             return (
-              //   <Link to=>
               <tr
+                key={id}
                 onClick={() => {
                   navigate(`/user/${id}`);
                 }}
@@ -61,7 +61,6 @@ const Home = () => {
                 <td>{gender}</td>
                 <td>{phone}</td>
               </tr>
-              //   </Link>
             );
           })}
         </tbody>
@@ -72,8 +71,9 @@ const Home = () => {
           .map((element, i) => {
             return (
               <button
+                key={i}
                 className={i + 1 === pagination.page ? "button-active" : ""}
-                onClick={(e) =>
+                onClick={() =>
                   setPagination((prevState) => ({ ...prevState, page: i + 1 }))
                 }
               >

@@ -1,0 +1,14 @@
+.usertable td {
+  border: 1px solid gray;
+  padding: 0.25rem 0.75rem;
+}
+
+.usertable tbody {
+  background-color: rgb(216, 244, 255);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
