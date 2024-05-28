@@ -8,8 +8,6 @@ services:
             POSTGRES_USER: "${POSTGRES_USER}"
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
             POSTGRES_DB: ${POSTGRES_DB}
-        volumes:
-            - ./docker_test_db:/var/lib/postgresql/data
         healthcheck:
             test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
             interval: 5s
@@ -26,7 +24,7 @@ services:
         command: bash -c "npx prisma migrate reset --force && npm start"
         environment:
             DATABASE_URL: "${DATABASE_URL}"
-            PORT: "${PORT}"
+            PORT: "${SERVER_PORT}"
         depends_on:
             postgres:
                 condition: service_healthy
@@ -37,6 +35,6 @@ services:
             dockerfile: Dockerfile
         command: bash -c "npm run preview"
         ports:
-            - "4174:4173"
+            - "4172:4173"
         depends_on:
             - server
