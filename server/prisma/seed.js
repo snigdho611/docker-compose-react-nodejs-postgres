@@ -411,8 +411,6 @@ async function main() {
 async function init() {
     const users = await prisma.user.count();
 
-    console.log(users)
-    
     if (users === 0) {
         main()
             .then(async () => {
@@ -423,9 +421,10 @@ async function init() {
                 await prisma.$disconnect();
                 process.exit(1);
             });
+        console.log("Database is successully seeded");
     } else {
         console.log("Database seeding is not needed");
     }
 }
 
-init()
+init();
