@@ -8,14 +8,15 @@ services:
             POSTGRES_USER: "${POSTGRES_USER}"
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
             POSTGRES_DB: ${POSTGRES_DB}
+        command: bash -c "npm run preview"
         volumes:
             - ./docker_test_db:/var/lib/postgresql/data
         healthcheck:
-          test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
-          interval: 5s
-          timeout: 60s
-          retries: 5
-          start_period: 80s  
+            test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+            interval: 5s
+            timeout: 60s
+            retries: 5
+            start_period: 80s
     server:
         container_name: server
         build:
@@ -29,7 +30,7 @@ services:
             PORT: "${PORT}"
         depends_on:
             postgres:
-              condition: service_healthy
+                condition: service_healthy
     client:
         container_name: client
         build:
