@@ -1,4 +1,4 @@
-### Docker Compose for a Full Stack Application
+### Docker Compose for a Full-Stack Application with React, Node.js, and PostgreSQL
 
 This repository demonstrates how to set up a React JS, Node JS server with a PostgreSQL database server inside docker containers and connect them all together
 
@@ -152,4 +152,4 @@ client:
 **Explanation**
 Note: *The commands for `client` are very similar to the already explained above for `server` and `postgres`*
 
-That's a wrap for a basic tutorial on how to get Docker and Docker Compose set up for a Full Stack Application.
+This tutorial provides a basic understanding of using Docker Compose to manage a full-stack application. Explore the code and docker-compose.yml file for further details.
