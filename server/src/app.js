@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const cors = require("cors");
-// const users = require("./server/users.json");
 const dotenv = require("dotenv");
 const HTTP_STATUS = require("./constants/httpStatus");
 const prisma = require("./config/database");
