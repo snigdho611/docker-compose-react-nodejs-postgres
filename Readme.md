@@ -151,3 +151,5 @@ client:
 ```
 **Explanation**
 Note: *The commands for `client` are very similar to the already explained above for `server` and `postgres`*
+
+That's a wrap for a basic tutorial on how to get Docker and Docker Compose set up for a Full Stack Application.
