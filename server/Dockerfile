@@ -3,5 +3,6 @@ WORKDIR /server
 COPY src/ /server/src
 COPY prisma/ /server/prisma
 COPY package.json /server
+COPY tsconfig.json /server
 RUN npm install
 RUN npx prisma generate
