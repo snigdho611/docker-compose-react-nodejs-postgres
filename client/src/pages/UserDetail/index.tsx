@@ -4,7 +4,13 @@ import "./index.css";
 
 const UserDetail = () => {
   const { id } = useParams();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<{
+    id: number;
+    first_name: string;
+    last_name: string;
+    gender: string;
+    phone: string;
+  } | null>(null);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_SERVER_URL}/user/${id}`)
