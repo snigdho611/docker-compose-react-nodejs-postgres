@@ -9,7 +9,7 @@ services:
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
             POSTGRES_DB: ${POSTGRES_DB}
         volumes:
-            - ./docker_test_db:/var/lib/postgresql/data
+            - db-data:/var/lib/postgresql
         healthcheck:
             test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
             interval: 5s
@@ -35,7 +35,7 @@ services:
         build:
             context: ./client
             dockerfile: Dockerfile
-        command: bash -c "npm run preview"
+        command: 'bash -c "npm run preview -- --host 0.0.0.0 --strictPort"'
         ports:
             - "4172:4173"
         depends_on:

@@ -33,7 +33,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <span className="header">User List ({pagination.total})</span>
+      <span className="header">la List de user ({pagination.total})</span>
       <table className="table">
         <thead className="thead">
           <tr>
