@@ -6,7 +6,9 @@ const dotenv = require("dotenv");
 const HTTP_STATUS = require("./constants/httpStatus");
 const prisma = require("./config/database");
 dotenv.config();
-app.use(cors());
+app.use(cors({
+  origin: '*', // Pour les previews, c'est le plus simple pour autoriser toutes les URLs sslip.io
+}));
 
 router.get("/users/all", async (req, res) => {
     try {
