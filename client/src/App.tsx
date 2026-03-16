@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import UserDetail from "./pages/UserDetail";
@@ -12,7 +11,7 @@ function App() {
         <Route path="/user/:id" element={<UserDetail />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

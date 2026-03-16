@@ -1,10 +1,10 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors"
 import dotenv from "dotenv";
 import HTTP_STATUS from "./constants/httpStatus";
+dotenv.config({ path: "./.env" });
 import prisma from "./config/database";
 
-dotenv.config();
 
 const app = express();
 const router = express.Router();
@@ -59,7 +59,7 @@ router.get("/users/all", async (req, res) => {
     }
 });
 
-router.get(`/user/:id`, async (req, res) => {
+router.get(`/user/:id`, async (req: Request, res: Response) => {
     try {
         console.log(`${new Date().toISOString()} - Single user request hit!`);
         const { id } = req.params;
