@@ -1,11 +1,13 @@
-const express = require("express");
+import express from "express";
+import cors from "cors"
+import dotenv from "dotenv";
+import HTTP_STATUS from "./constants/httpStatus";
+import prisma from "./config/database";
+
+dotenv.config();
+
 const app = express();
 const router = express.Router();
-const cors = require("cors");
-const dotenv = require("dotenv");
-const HTTP_STATUS = require("./constants/httpStatus");
-const prisma = require("./config/database");
-dotenv.config();
 app.use(cors());
 
 router.get("/users/all", async (req, res) => {
@@ -14,11 +16,11 @@ router.get("/users/all", async (req, res) => {
         let { page, limit } = req.query;
 
         if (!page && !limit) {
-            page = 1;
-            limit = 5;
+            page = (1).toString();
+            limit = (5).toString();;
         }
 
-        if (page <= 0) {
+        if (parseInt((page).toString()) <= 0) {
             return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send({
                 success: false,
                 message: "Page value must be 1 or more",
@@ -26,7 +28,7 @@ router.get("/users/all", async (req, res) => {
             });
         }
 
-        if (limit <= 0) {
+        if (parseInt((limit).toString()) <= 0) {
             return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send({
                 success: false,
                 message: "Limit value must be 1 or more",
@@ -35,7 +37,7 @@ router.get("/users/all", async (req, res) => {
         }
 
         const users = await prisma.user.findMany({
-            skip: Number(page - 1) * Number(limit),
+            skip: Number((parseInt(page.toString()) - 1)) * Number(limit),
             take: Number(limit),
         });
 
