@@ -8,22 +8,29 @@
     "@prisma/client": "^7.5.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "nodemon": "^3.1.14"
+    "express": "^5.2.1"
   },
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/app.js",
     "dev": "tsc --watch & nodemon dist/src/app.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
     "@types/express": "^5.0.6",
     "@types/node": "^25.5.0",
+    "eslint": "^9.18.0",
+    "globals": "^15.14.0",
+    "jiti": "^2.6.1",
     "prisma": "^7.5.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.18.2",
+    "nodemon": "^3.1.14"
   }
 }

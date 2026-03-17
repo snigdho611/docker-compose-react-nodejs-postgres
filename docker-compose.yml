@@ -34,7 +34,7 @@ services:
         build:
             context: ./client
             dockerfile: Dockerfile
-        command: bash -c "npm run preview"
+        command: ["sh", "-c", "npm run preview"]
         ports:
             - "4172:4173"
         depends_on:
