@@ -1,11 +1,28 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es2024",
-    "moduleResolution": "node",
+    // Module System
+    "module": "commonjs",              // Modern ES modules
+    "moduleResolution": "node",   // Flexible, works with most packages
+    "target": "es2024",              // Modern Node.js (v16+)
+
+    // Output
+    "outDir": "dist",
     "sourceMap": true,
-    "outDir": "dist"
+    
+    // Type Checking
+    "strict": true,                  // All strict checks
+    "esModuleInterop": true,         // Better CommonJS interop
+    "skipLibCheck": true,            // Skip checking node_modules types
+    "forceConsistentCasingInFileNames": true,
+    
+    // Module Features
+    "resolveJsonModule": true,       // Import JSON files
+    "isolatedModules": true,         // Each file can be compiled independently
+    
+    // For Node.js
+    "lib": ["ES2022"],
+    "types": ["node"]                // Include Node.js types
   },
-  "lib": ["es2015"]
+  "include": ["src/**/*", "prisma/**/*", "*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
