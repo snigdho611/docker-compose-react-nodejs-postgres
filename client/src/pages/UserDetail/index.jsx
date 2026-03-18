@@ -12,8 +12,7 @@ const UserDetail = () => {
       .then((json) => {
         setUser(json.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setUser(null);
       });
   }, [id]);

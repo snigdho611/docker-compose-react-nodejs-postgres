@@ -1,7 +1,5 @@
-FROM node:18
+FROM node:22-alpine
 WORKDIR /server
-COPY src/ /server/src
-COPY prisma/ /server/prisma
-COPY package.json /server
+COPY . .
 RUN npm install
-RUN npx prisma generate
+CMD ["sh", "-c", "npx prisma generate && npx prisma migrate deploy && npx prisma db seed && npm run start"]

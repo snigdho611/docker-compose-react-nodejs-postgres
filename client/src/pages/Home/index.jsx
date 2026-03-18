@@ -25,8 +25,7 @@ const Home = () => {
           total: json.data.total,
         }));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setUsers([]);
       });
   }, [pagination.limit, pagination.page]);

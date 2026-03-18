@@ -1,5 +1,8 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const PrismaPg = require("@prisma/adapter-pg").PrismaPg;
+const PrismaClient = require("./generated/client").PrismaClient;
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
     await prisma.user.createMany({
