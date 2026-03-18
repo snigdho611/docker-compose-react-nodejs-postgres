@@ -4,3 +4,4 @@ dist
 .env
 .DS_Store
 eslint.config.ts
+prisma/generated/
