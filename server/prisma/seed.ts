@@ -1,5 +1,4 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-// @ts-expect-error - The problem here is that the generated directory won't be made until the prisma generate command has been run
 import { PrismaClient } from "./generated/client";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
