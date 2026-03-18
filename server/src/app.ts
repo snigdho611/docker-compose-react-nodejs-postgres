@@ -1,10 +1,10 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors"
 import dotenv from "dotenv";
 import HTTP_STATUS from "./constants/httpStatus";
+dotenv.config({ path: "./.env" });
 import prisma from "./config/database";
 
-dotenv.config();
 
 const app = express();
 const router = express.Router();
@@ -13,14 +13,17 @@ app.use(cors());
 router.get("/users/all", async (req, res) => {
     try {
         console.log(`${new Date().toISOString()} - All users request hit!`);
-        let { page, limit } = req.query;
+        const { page, limit } = req.query;
+        let _page: string = "1";
+        let _limit: string = "1";
 
         if (!page && !limit) {
-            page = (1).toString();
-            limit = (5).toString();;
+            _page = (1).toString();
+            _limit = (5).toString();;
         }
 
-        if (parseInt((page).toString()) <= 0) {
+        if (parseInt((_page).toString()) <= 0) {
+            console.log('o')
             return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send({
                 success: false,
                 message: "Page value must be 1 or more",
@@ -28,7 +31,7 @@ router.get("/users/all", async (req, res) => {
             });
         }
 
-        if (parseInt((limit).toString()) <= 0) {
+        if (parseInt((_limit).toString()) <= 0) {
             return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send({
                 success: false,
                 message: "Limit value must be 1 or more",
@@ -37,7 +40,7 @@ router.get("/users/all", async (req, res) => {
         }
 
         const users = await prisma.user.findMany({
-            skip: Number((parseInt(page.toString()) - 1)) * Number(limit),
+            skip: Number((parseInt(_page.toString()) - 1)) * Number(limit),
             take: Number(limit),
         });
 
@@ -59,7 +62,7 @@ router.get("/users/all", async (req, res) => {
     }
 });
 
-router.get(`/user/:id`, async (req, res) => {
+router.get(`/user/:id`, async (req: Request, res: Response) => {
     try {
         console.log(`${new Date().toISOString()} - Single user request hit!`);
         const { id } = req.params;

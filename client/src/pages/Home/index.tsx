@@ -68,7 +68,7 @@ const Home = () => {
       <div className="pagination">
         {Array(pagination.total / pagination.limit)
           .fill(0)
-          .map((element, i) => {
+          .map((_, i) => {
             return (
               <button
                 key={i}
